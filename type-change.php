@@ -58,11 +58,10 @@
                         echo '<option value="'.$dia.'"></option>'
                         $dia++;
                     } ?>
-                    
                   </select>
               </div>
               <div class="form-group">
-                  <input type="text" class="form-control" name="money-symbol" placeholder="Simbolo" required>
+                  <input type="date" class="form-control" name="money-symbol" placeholder="Simbolo" required>
               </div>
               
               <button type="submit" name="add_tipo_cambio" class="btn btn-primary">Agregar Moneda</button>
