@@ -87,10 +87,10 @@
                     <td><?php echo remove_junk(ucfirst($money['simbolo'])); ?></td>
                     <td class="text-center">
                       <div class="btn-group">
-                        <a href="edit_money.php?id=<?php echo (int)$moneda['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
+                        <a href="edit_money.php?id=<?php echo (int)$money['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
                           <span class="glyphicon glyphicon-edit"></span>
                         </a>
-                        <a href="delete_money.php?id=<?php echo (int)$moneda['id'];?>"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
+                        <a href="delete_money.php?id=<?php echo (int)$money['id'];?>"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
                           <span class="glyphicon glyphicon-trash"></span>
                         </a>
                       </div>
