@@ -26,6 +26,8 @@
        <li><a href="categorie.php">Categorías</a> </li>
        <li><a href="measure.php">Unidad de medida</a> </li>
        <li><a href="type.php">Tipo de articulo</a> </li>
+       <li><a href="price.php">Precio</a> </li>
+       <li><a href="money.php">Moneda</a> </li>
    </ul>
   </li>
   <li>
