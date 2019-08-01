@@ -8,7 +8,7 @@
 $product = find_by_id('products',(int)$_GET['id']);
 $all_categories = find_all('categories');
 $all_photo = find_all('media');
-$all_products = find_all('products')
+$all_products = find_all('products');
 if(!$product){
   $session->msg("d","Missing product id.");
   redirect('product.php');

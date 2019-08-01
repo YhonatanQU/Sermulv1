@@ -6,6 +6,8 @@
   $all_categories = find_all('categories');
   $all_photo = find_all('media');
   $all_measure = find_all('measure');
+  $all_type = find_all('typy');
+  
   
 ?>
 <?php
@@ -88,7 +90,7 @@
                            <option value="">Categoría</option>
                             <?php  foreach ($all_categories as $cat): ?>
                           <option value="<?php echo (int)$cat['id'] ?>">
-                            <?php echo $cat['name'];?>
+                            <?php echo (int)$cat['Numbe'] . ' - ' . $cat['name'];?>
                           </option>
                             <?php endforeach; ?>
                         </select>
@@ -177,9 +179,11 @@
                        <i class="glyphicon glyphicon-th-large"></i>
                       </span>
                       <select class="form-control" name="product-type">
-                      <option value="">Tipo</option>
-                      <option value="CONSUMIBLE">CONSUMIBLE</option>
-                      <option value="NO-CONSUMIBLE">NO CONSUMIBLE</option>
+                        <option value="">Tipo</option>
+                        <?php  foreach ($all_type as $type): ?>
+                          <option value="<?php echo (int)$type['id'] ?>">
+                          <?php echo $type['NameType'] ?></option>
+                        <?php endforeach; ?>
                     </select>
                   </div>
                  </div>

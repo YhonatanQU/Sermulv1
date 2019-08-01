@@ -53,7 +53,7 @@
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="plus_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-warning btn-xs"  title="Detalles" data-toggle="tooltip">
+                    <a href="detail_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-warning btn-xs"  title="Detalles" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-plus"></span>
                     </a>
                     <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">

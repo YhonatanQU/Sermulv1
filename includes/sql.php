@@ -211,10 +211,13 @@ function tableExists($table){
   function join_product_table(){
      global $db;
      $sql  =" SELECT p.id,p.name,p.codigo,p.marca,p.modelo,p.date,p.parte,p.serie,p.color,p.tipo,c.ShortName";
-    $sql  .=" AS categorie, m.file_name AS image, u.ShortName AS medida";
+    $sql  .=" AS categorie, m.file_name AS image, u.ShortName AS medida, t.NameType AS tipo, n.name AS nombre, l.NameMedida AS NombreMedida";
     $sql  .=" FROM products p";
     $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+    $sql  .=" LEFT JOIN categories n ON n.id = p.categorie_id";
     $sql  .=" LEFT JOIN measure u ON u.id = p.id_measure";    
+    $sql  .=" LEFT JOIN measure l ON l.id = p.id_measure";    
+    $sql  .=" LEFT JOIN typy t ON t.id = p.tipo";    
     $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
     $sql  .=" ORDER BY p.id ASC";
     return find_by_sql($sql);

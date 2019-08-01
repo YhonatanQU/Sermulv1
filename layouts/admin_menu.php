@@ -43,6 +43,12 @@
    </ul>
   </li>
   <li>
+    <a href="type-change.php" >
+      <i class="glyphicon glyphicon-usd"></i>
+      <span>Tipo de cambio</span>
+    </a>
+  </li>
+  <li>
     <a href="media.php" >
       <i class="glyphicon glyphicon-picture"></i>
       <span>Media</span>

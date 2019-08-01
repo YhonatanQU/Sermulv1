@@ -4,30 +4,30 @@
   // Checkin What level user has permission to view this page
   page_require_level(1);
   
-  $all_money = find_all('tipo_cambio')
+  $all_type = find_all('tipo_cambio')
 ?>
-
-
 
 <?php
  if(isset($_POST['add_tipo_cambio'])){
-   $req_field = array('tipo-dia');
+   $req_field = array('date-type');
    validate_fields($req_field);
-   $day = remove_junk($db->escape($_POST['tipo-cambio']));
-   $money_symbol = remove_junk($db->escape($_POST['money-symbol']));
+   $day = remove_junk($db->escape($_POST['day-type']));
+   $buy = remove_junk($db->escape($_POST['buy-type']));
+   $sale = remove_junk($db->escape($_POST['sale-type']));
+   $date = remove_junk($db->escape($_POST['date-type']));
    if(empty($errors)){
-      $sql  = "INSERT INTO money (moneda,simbolo)";
-      $sql .= " VALUES ('{$day}','{$money_symbol}')";
+      $sql  = "INSERT INTO tipo_cambio (dia,date,compra,venta)";
+      $sql .= " VALUES ('{$day}','{$date}','{$buy}','{$sale}')";
       if($db->query($sql)){
-        $session->msg("s", "Moneda agregada exitosamente.");
-        redirect('money.php',false);
+        $session->msg("s", "Tipo de cambio agregada exitosamente.");
+        redirect('type-change.php',false);
       } else {
         $session->msg("d", "Lo siento, registro falló");
-        redirect('money.php',false);
+        redirect('type-change.php',false);
       }
    } else {
      $session->msg("d", $errors);
-     redirect('money.php',false);
+     redirect('type-change.php',false);
    }
  }
 ?>
@@ -44,27 +44,42 @@
         <div class="panel-heading">
           <strong>
             <span class="glyphicon glyphicon-th"></span>
-            <span>Agregar Moneda</span>
+            <span>Agregar tipo de cambio</span>
          </strong>
         </div>
         <div class="panel-body">
-          <form method="post" action="money.php">
-              <div class="form-group">
-                  <select class="form-control" name="tipo-dia" multiple>
+          <form method="post" action="type-change.php">
+              <div class="input-group">
+                  <select class="form-control" name="day-type">
                     <option value="">Dia</option>
                     <?php 
                       $dia=1;
                       while ( $dia <= 31) {
-                        echo '<option value="'.$dia.'"></option>'
+                        echo '<option value="'.$dia.'">'.$dia.'</option>';
                         $dia++;
                     } ?>
                   </select>
               </div>
-              <div class="form-group">
-                  <input type="date" class="form-control" name="money-symbol" placeholder="Simbolo" required>
-              </div>
+                <div class="input-group from-control">
+                      <span class="input-group-addon">
+                       <i class="glyphicon glyphicon-th-large"></i>
+                      </span>
+                      <input type="number" step="any" class="form-control" name="buy-type" placeholder="Compra">
+                </div> 
               
-              <button type="submit" name="add_tipo_cambio" class="btn btn-primary">Agregar Moneda</button>
+              <div class="input-group">
+                    <span class="input-group-addon">
+                     <i class="glyphicon glyphicon-th-large"></i>
+                    </span>
+                    <input type="number" step="any" class="form-control" name="sale-type" placeholder="Venta">
+              </div>
+              <div class="input-group">
+                  <span class="input-group-addon">
+                     <i class="glyphicon glyphicon-th-large"></i>
+                  </span>
+                  <input class="datepicker form-control" name="date-type" placeholder="Fecha">
+              </div>
+              <button type="submit" name="add_tipo_cambio" class="btn btn-primary">Agregar tipo de cambio</button>
           </form>
         </div>
       </div>
@@ -82,23 +97,27 @@
             <thead>
                 <tr>
                     <th class="text-center" style="width: 50px;">#</th>
-                    <th>Nombre de moneda</th>
-                    <th>Simbolo</th>
+                    <th>Dia</th>
+                    <th>Fecha</th>
+                    <th>Compra</th>
+                    <th>Venta</th>
                     <th class="text-center" style="width: 100px;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-              <?php foreach ($all_money as $money):?>
+              <?php foreach ($all_type as $type):?>
                 <tr>
                     <td class="text-center"><?php echo count_id();?></td>
-                    <td><?php echo remove_junk(ucfirst($money['moneda'])); ?></td>
-                    <td><?php echo remove_junk(ucfirst($money['simbolo'])); ?></td>
+                    <td><?php echo remove_junk(ucfirst($type['dia'])); ?></td>
+                    <td><?php echo remove_junk(ucfirst($type['date'])); ?></td>
+                    <td><?php echo remove_junk(ucfirst($type['compra'])); ?></td>
+                    <td><?php echo remove_junk(ucfirst($type['venta'])); ?></td>
                     <td class="text-center">
                       <div class="btn-group">
-                        <a href="edit_money.php?id=<?php echo (int)$money['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
+                        <a href="edit_change.php?id=<?php echo (int)$type['id'];?>"  class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
                           <span class="glyphicon glyphicon-edit"></span>
                         </a>
-                        <a href="delete_money.php?id=<?php echo (int)$money['id'];?>"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
+                        <a href="delete_change.php?id=<?php echo (int)$type['id'];?>"  class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
                           <span class="glyphicon glyphicon-trash"></span>
                         </a>
                       </div>
