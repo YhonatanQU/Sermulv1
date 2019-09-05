@@ -12,17 +12,22 @@
      </div>
     <div class="col-md-6">
       <div class="panel panel-default">
+          <?php foreach ($products as $product): ?>
+            <?php endforeach ?>
         <div class="panel-heading clearfix">
          <div class="pull-right">
+
+         
+           <a href="product.php" class="btn btn-primary" title="Ingresar articulo" data-toggle="tooltip">
+             <span class="glyphicon glyphicon-menu-left"></span>
+           </a>
            <a href="add_product.php" class="btn btn-primary" title="Ingresar articulo" data-toggle="tooltip">
              <span class="glyphicon glyphicon-plus"></span>
            </a>
-         </div>
-         <div class="btn-group">
-            <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-warning"  title="Editar" data-toggle="tooltip">
+           <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-warning"  title="Editar" data-toggle="tooltip">
               <span class="glyphicon glyphicon-edit"></span>
             </a>
-            <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-success"  title="Imprimir" data-toggle="tooltip">
+            <a href="print_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-success"  title="Imprimir" data-toggle="tooltip">
               <span class="glyphicon glyphicon-print"></span>
             </a>
              <a href="delete_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger"  title="Eliminar" data-toggle="tooltip">
@@ -34,20 +39,13 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th class="text-left" colspan="2">DETALLE DE ARTICULO
-
-                  <?php 
-                    foreach ($products as $product ) {
-                      //echo remove_junk($product['name']); 
-                    }
-                  ?>
-                    
+                <th class="text-left" colspan="2">DETALLE DE ARTICULO                    
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td colspan="2"> <img src="uploads/products/<?php echo remove_junk($product['image']); ?>" alt=""></td>
+                <td colspan="2" class="text-center"> <img src="uploads/products/<?php echo remove_junk($product['image']); ?>" alt=""></td>
               </tr>
               <tr>
                 <td class="text-right"> <strong>Descripcion</strong> </td>
@@ -97,6 +95,7 @@
             </tbody>
           </table>
         </div>
+
       </div>
     </div>
   </div>

@@ -87,7 +87,7 @@ function total_price($totals){
 /*--------------------------------------------------------------*/
 function read_date($str){
      if($str)
-      return date('d/m/Y g:i:s a', strtotime($str));
+      return date('Y-m-d', strtotime($str));
      else
       return null;
   }
@@ -117,5 +117,19 @@ function randString($length = 5)
   return $str;
 }
 
+function make_number_rq()
+{
+  $str='RQ-';
+  $d = date('d');
+  $m = date('m');
+  $y = date('Y');
+  $s = date('s');
+  $h = date('h');
+  $i = date('i');
+
+  $NumberRq = $str.$d.$m.$y.$s.$i.$h;
+
+  return  $NumberRq;
+}
 
 ?>

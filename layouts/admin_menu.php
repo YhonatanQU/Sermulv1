@@ -16,6 +16,12 @@
    </ul>
   </li>
   <li>
+    <a href="ceco.php" class="submenu-toggle">
+      <i class="glyphicon glyphicon-folder-open"></i>
+      <span>Centros de costos</span>
+    </a>
+  </li>
+  <li>
     <a href="#" class="submenu-toggle">
       <i class="glyphicon glyphicon-th-large"></i>
       <span>Articulos</span>
@@ -23,6 +29,9 @@
     <ul class="nav submenu">
        <li><a href="product.php">Administrar articulos</a> </li>
        <li><a href="add_product.php">Agregar articulos</a> </li>
+       <li><a href="inventory.php">Inventario</a> </li>
+       <li><a href="consumo.php">Consumo</a> </li>
+       <li><a href="ingreso.php">Ingreso</a> </li>
        <li><a href="categorie.php">Categorías</a> </li>
        <li><a href="measure.php">Unidad de medida</a> </li>
        <li><a href="type.php">Tipo de articulo</a> </li>
@@ -53,6 +62,22 @@
       <i class="glyphicon glyphicon-picture"></i>
       <span>Media</span>
     </a>
+  </li> 
+  <li>
+    <a href="tc.php" >
+      <i class="glyphicon glyphicon-picture"></i>
+      <span>tc</span>
+    </a>
+  </li>
+  <li>
+    <a href="#" class="submenu-toggle">
+      <i class="glyphicon glyphicon-ok-sign"></i>
+       <span>Requerimientos</span>
+      </a>
+      <ul class="nav submenu">
+         <li><a href="sales.php">Administrar requerimientos</a> </li>
+         <li><a href="add_requirements.php">Nuevo RQ</a> </li>
+     </ul>
   </li>
   <li>
     <a href="#" class="submenu-toggle">

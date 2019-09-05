@@ -1,7 +1,8 @@
 <?php include_once('includes/load.php'); ?>
 <?php
-$req_fields = array('username','password' );
+$req_fields = array('username','password');
 validate_fields($req_fields);
+//$ceco = remove_junk($_POST['ceco']);
 $username = remove_junk($_POST['username']);
 $password = remove_junk($_POST['password']);
 

@@ -13,7 +13,7 @@
 <?php
   $delete_id = delete_by_id('products',(int)$product['id']);
   if($delete_id){
-      $session->msg("s","Producto eliminado");
+      $session->msg("s","Articulo eliminado");
       redirect('product.php');
   } else {
       $session->msg("d","Eliminación falló");

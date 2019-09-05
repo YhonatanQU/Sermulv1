@@ -13,10 +13,10 @@ body{
   padding-top: 20px;
 }.login-page{
   width: 350px;
-  margin: 7% auto;
-  padding: 0 20px;
+  padding: 20px;
   background-color: #f9f9f9;
   border: 1px solid #f2f2f2;
+  
 }.login-page .text-center{
   margin-bottom: 10px;
 }.box{
@@ -303,4 +303,45 @@ input[type=file]{
 }img.img-size-2{
   width: 125px;
   height: 125px;
+}
+
+
+#formNewPrice{
+  display: none;
+}
+.alert-message{
+  color:green;
+
+}
+a{
+  cursor: pointer;
+}
+.table-data{
+  margin: 0px 4px;
+}
+.content-form{
+  margin: auto;
+}
+#money-check, #provider-check, .ceco-form, #ceco-list, #ddetalle-requerimiento,#cabecera-requerimiento{
+  display: none;
+}
+.label-form{
+  font-weight: inherit !important;
+  color: #777;
+}
+.resultado-ajax{
+  font-weight: bold;
+  font-size: 1.15em;
+}
+.red-ajax{
+  color:#d9534f;
+}
+.green-ajax{
+  color: #5cb85c;
+}
+.blue-ajax{
+  color: #337ab7;
+}
+.aqua-ajax{
+  color: #5bc0de;
 }

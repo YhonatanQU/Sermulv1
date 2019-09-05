@@ -7,12 +7,17 @@
            echo remove_junk($page_title);
             elseif(!empty($user))
            echo ucfirst($user['name']);
-            else echo "Sistema simple de inventario";?>
+            else echo "Sistema de sermul";?>
     </title>
 	
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+    
+  
+
     <link rel="stylesheet" href="libs/css/main.css" />
+    <!-- <link rel="stylesheet" href="libs/css/botts.css" /> -->
   </head>
   <body>
   <?php  if ($session->isUserLoggedIn(true)): ?>
@@ -20,7 +25,7 @@
       <div class="logo pull-left"> SERMUL </div>
       <div class="header-content">
       <div class="header-date pull-left">
-        <strong><?php echo date("d/m/Y  g:i a");?></strong>
+        <strong><?php //echo date("d/m/Y  g:i a");?></strong>
       </div>
       <div class="pull-right clearfix">
         <ul class="info-menu list-inline list-unstyled">

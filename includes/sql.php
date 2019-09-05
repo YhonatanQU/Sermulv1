@@ -205,6 +205,35 @@ function tableExists($table){
 
      }
    /*--------------------------------------------------------------*/
+   /* Function for Finding all ceco
+   /* 
+   /*--------------------------------------------------------------*/
+  function ceco_by_status($status){
+    global $db;
+    $sql = "SELECT * FROM ceco WHERE status = '{$db->escape($status)}'";    
+    return find_by_sql($sql);
+   }
+   /*--------------------------------------------------------------*/
+   /* Function for Finding all product name
+   /* JOIN with categorie  and media database table
+   /*--------------------------------------------------------------*/
+  function join_product_codigo($codigo){
+     global $db;
+     $sql  =" SELECT p.id,p.name,p.codigo,p.marca,p.modelo,p.date,p.parte,p.serie,p.color,p.tipo,c.ShortName";
+    $sql  .=" AS categorie, m.file_name AS image, u.ShortName AS medida, t.NameType AS tipo, n.name AS nombre, l.NameMedida AS NombreMedida";
+    $sql  .=" FROM products p";
+    $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+    $sql  .=" LEFT JOIN categories n ON n.id = p.categorie_id";
+    $sql  .=" LEFT JOIN measure u ON u.id = p.id_measure";    
+    $sql  .=" LEFT JOIN measure l ON l.id = p.id_measure";    
+    $sql  .=" LEFT JOIN typy t ON t.id = p.tipo";    
+    $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+    $sql  .=" WHERE p.codigo = $codigo ORDER BY p.id ASC";
+    $result = find_by_sql($sql);
+    return json_encode($result);
+   }
+
+    /*--------------------------------------------------------------*/
    /* Function for Finding all product name
    /* JOIN with categorie  and media database table
    /*--------------------------------------------------------------*/
@@ -223,6 +252,63 @@ function tableExists($table){
     return find_by_sql($sql);
 
    }
+
+   /*--------------------------------------------------------------*/
+   /* Function for Finding all product price
+   /* JOIN with categorie  and media database table
+   /*--------------------------------------------------------------*/
+  function join_price_table(){
+     global $db;
+     $sql  =" SELECT p.id,p.price,p.date_price,n.name";
+    $sql  .=" AS product, s.simbolo AS money, c.codigo AS codigo, m.RazonSocial AS provider";
+    $sql  .=" FROM price p ";
+    $sql  .=" LEFT JOIN products n ON n.id = p.producto_id";
+    $sql  .=" LEFT JOIN products c ON c.id = p.producto_id";
+    $sql  .=" LEFT JOIN money s ON s.id = p.money";
+    $sql  .=" LEFT JOIN tipo_cambio f ON f.id = p.tipo_cambio";    
+    $sql  .=" LEFT JOIN provider m ON m.id = p.Provider";
+    $sql  .=" ORDER BY p.id ASC";
+    return find_by_sql($sql);
+
+   }
+   /*--------------------------------------------------------------*/
+   /* Function for Finding all product price by id
+   /* JOIN with categorie  and media database table
+   /*--------------------------------------------------------------*/
+  function join_price_table_by_id($price_id){
+     global $db;
+     $sql  =" SELECT p.id,p.price,p.date_price,p.producto_id,p.money,p.Provider,n.name";
+    $sql  .=" AS product, s.simbolo AS simbolo, c.codigo AS codigo, o.moneda AS moneda, m.Ruc AS provider";
+    $sql  .=" FROM price p ";
+    $sql  .=" LEFT JOIN products n ON n.id = p.producto_id";
+    $sql  .=" LEFT JOIN products c ON c.id = p.producto_id";
+    $sql  .=" LEFT JOIN money s ON s.id = p.money";
+    $sql  .=" LEFT JOIN money o ON o.id = p.money";
+    $sql  .=" LEFT JOIN tipo_cambio f ON f.id = p.tipo_cambio";    
+    $sql  .=" LEFT JOIN provider m ON m.id = p.Provider";
+    $sql  .=" WHERE p.id = $price_id";
+    return find_by_sql($sql);
+
+   }
+
+   /*--------------------------------------------------------------*/
+   /* Function for Finding all product price staus
+   /* JOIN with categorie  and media database table
+   /*--------------------------------------------------------------*/   
+  function join_price_status_table($idprice){
+     global $db;
+     $sql  =" SELECT p.id,p.price,p.date_price,p.status,n.name";
+    $sql  .=" AS product, s.simbolo AS money, c.codigo AS codigo, m.Ruc AS provider";
+    $sql  .=" FROM price p ";
+    $sql  .=" LEFT JOIN products n ON n.id = p.producto_id";
+    $sql  .=" LEFT JOIN products c ON c.id = p.producto_id";
+    $sql  .=" LEFT JOIN money s ON s.id = p.money";
+    $sql  .=" LEFT JOIN tipo_cambio f ON f.id = p.tipo_cambio";    
+    $sql  .=" LEFT JOIN provider m ON m.id = p.Provider";
+    $sql  .=" WHERE p.status = $idprice ORDER BY p.id ASC";
+    return find_by_sql($sql);
+
+   }
   /*--------------------------------------------------------------*/
   /* Function for Finding all product name
   /* Request coming from ajax.php for auto suggest
@@ -231,10 +317,62 @@ function tableExists($table){
    function find_product_by_title($product_name){
      global $db;
      $p_name = remove_junk($db->escape($product_name));
-     $sql = "SELECT name FROM products WHERE name like '%$p_name%' LIMIT 5";
+     $sql = "SELECT * FROM products WHERE name like '%$p_name%' LIMIT 5";
+     $result = find_by_sql($sql);
+     return json_encode($result);
+   }
+  /*--------------------------------------------------------------*/
+  /* Function for Finding all ceco by id
+  /* 
+  /*--------------------------------------------------------------*/
+
+   function find_ceco_by_id($ceco_id){
+     global $db;
+     $ceco = remove_junk($db->escape($ceco_id));
+     $sql = "SELECT * FROM ceco WHERE id = $ceco";
+     $result = find_by_sql($sql);
+     return json_encode($result);
+   }
+  /*--------------------------------------------------------------*/
+  /* Function for Finding all product codigo
+  /* Request coming from ajax.php for auto suggest
+  /*--------------------------------------------------------------*/
+
+   function find_product_by_codigo($producto_codigo){
+     global $db;
+     $p_codigo = remove_junk($db->escape($producto_codigo));
+     $sql = "SELECT * FROM products WHERE codigo like '%$p_codigo%' LIMIT 1";
+     $result = find_by_sql($sql);
+     return json_encode($result);
+   }
+   
+  /*--------------------------------------------------------------*/
+  /* Funcion que busca producto por id en la tabla price
+  /* 
+  /*--------------------------------------------------------------*/
+
+   function find_product_by_id_in_price($product_id){
+     global $db;
+     $codigo = remove_junk($db->escape($product_id));
+     $sql = "SELECT * FROM price WHERE producto_id like '%$p_id%' LIMIT 1";
      $result = find_by_sql($sql);
      return $result;
    }
+   
+  /*--------------------------------------------------------------*/
+  /* Buscar precio por id
+  /* Request coming from ajax.php for auto suggest
+  /*--------------------------------------------------------------*/
+
+
+  function find_price_by_id($price_id){
+     global $db;
+     $price = remove_junk($db->escape($price_id));
+     $sql = "SELECT * FROM price WHERE id = $price ";
+     $result = find_by_sql($sql);
+     return $result;
+   }
+ 
 
   /*--------------------------------------------------------------*/
   /* Function for Finding all product info by product title
@@ -260,6 +398,40 @@ function tableExists($table){
     return($db->affected_rows() === 1 ? true : false);
 
   }
+  /*--------------------------------------------------------------*/
+  /* Function for Update price status by codigo of product
+  /*--------------------------------------------------------------*/
+  function update_status_price_product($codigo){
+    global $db;
+    $codigo  = (int)$codigo;
+    $sql = "UPDATE price SET status=0 WHERE producto_id = '{$codigo}'";
+    $result = $db->query($sql);
+    return ($db->affected_rows() === 1 ? true : false);
+
+  }
+  /*--------------------------------------------------------------*/
+  /* Function for Update price status by id price
+  /*--------------------------------------------------------------*/
+  function update_status_price_id($id_price){
+    global $db;
+    $id_price  = (int)$id_price;
+    $sql = "UPDATE price SET status=0 WHERE id = '{$id_price}'";
+    $result = $db->query($sql);
+    return ($db->affected_rows() === 1 ? true : false);
+
+  }
+  /*--------------------------------------------------------------*/
+  /* Function for Update CECO status by id ceco
+  /*--------------------------------------------------------------*/
+  function update_status_ceco_id($id_ceco){
+    global $db;
+    $id_ceco  = (int)$id_ceco;
+    $sql = "UPDATE ceco SET status=0 WHERE id = '{$id_ceco}'";
+    $result = $db->query($sql);
+    return $result;// ($db->affected_rows() === 1 ? true : false);
+
+  }
+  
   /*--------------------------------------------------------------*/
   /* Function for Display Recent product Added
   /*--------------------------------------------------------------*/
