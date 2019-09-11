@@ -46,7 +46,7 @@
                          <i class="glyphicon glyphicon-th-large"></i>
                         </span>
                         
-                        <select id="product" class="form-control" name="product-name">
+                        <select id="product-price" class="form-control" name="product-name">
                            
                         </select>
                        

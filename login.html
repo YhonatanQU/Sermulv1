@@ -1,63 +1,65 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Login Sermul</title>
-	<meta name="name" content="content" charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/css/uikit.min.css" />
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/js/uikit.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/js/uikit-icons.min.js"></script>
+    <title>Login Sermul</title>
+    <meta name="name" content="content" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/css/uikit.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.1.7/js/uikit-icons.min.js"></script>
 
 </head>
+
 <body>
-	<div class="uk-width-1-1@s uk-inline">
-		<div class="uk-child-width-1-4@s "></div>
-		<div class="uk-card uk-card-default  uk-child-width-1-2@s uk-margin" uk-grid>
-		    <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
-		        <img src="libs/images/light.jpg" alt="" uk-cover>
-		        <img src="libs/images/light.jpg" alt="" uk-cover>
-		        <canvas width="600" height="400"></canvas>
-		    </div>
-		    <div >
-		        <div class="uk-card-body">
-		            <h3 class="uk-card-title">Bienvenido</h3>
-		            <form method="post" action="auth.php" class="">
-		            <legend class="uk-legend">Iniciar Sesion</legend>
-		            <div class="uk-margin">
-			            <!-- <label class="uk-form-label" for="ceco">Centro de costos</label> -->
-				        <div class="uk-form-controls uk-width-1-2@s">
-				               <select class="uk-select" name="ceco">
+    <div class="uk-width-1-1@s uk-inline">
+        <div class="uk-child-width-1-4@s "></div>
+        <div class="uk-card uk-card-default  uk-child-width-1-2@s uk-margin" uk-grid>
+            <div class="uk-flex-last@s uk-card-media-right uk-cover-container">
+                <img src="libs/images/light.jpg" alt="" uk-cover>
+                <img src="libs/images/light.jpg" alt="" uk-cover>
+                <canvas width="600" height="400"></canvas>
+            </div>
+            <div>
+                <div class="uk-card-body">
+                    <h3 class="uk-card-title">Bienvenido</h3>
+                    <form method="post" action="auth.php" class="">
+                        <legend class="uk-legend">Iniciar Sesion</legend>
+                        <div class="uk-margin">
+                            <!-- <label class="uk-form-label" for="ceco">Centro de costos</label> -->
+                            <div class="uk-form-controls uk-width-1-2@s">
+                                <select class="uk-select" name="ceco">
 				                <option value="">Proyecto</option>
 				                <option value="">Opcion 1</option>
 				                <option value="">Opcion 2</option>
 				               </select>
-				        </div>	            	
-		            </div>
-		            <div class="uk-margin">
-				        <!-- <label class="uk-form-label" for="user">Usuario</label> -->
-				        <div class="uk-form-controls uk-inline uk-width-1-2@s">
-				        	  <span class="uk-form-icon" uk-icon="icon: user"></span>
-				              <input type="name" class="uk-input" name="username" placeholder="Usuario" id="user">
-				        </div>
-			        </div>
-		            <div class="uk-margin">
-				        <!-- <label class="uk-form-label" for="password">Contraseña</label> -->
-				        <div class="uk-form-controls uk-inline uk-width-1-2@s">
-				        	 <span class="uk-form-icon" uk-icon="icon: lock"></span>
-				            <input type="password" name= "password" class="uk-input" placeholder="Contraseña" id="password">
-				        </div>
-			        </div>
-		            <div class="uk-margin">
-				        <div class="uk-form-controls uk-inline uk-width-1-2@s">
-				                <button type="submit" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom">Entrar</button>
-				        </div>
-			        </div>
-		    	</form>
-		        </div>
-		    </div>
-		</div>
-		<div class="uk-child-width-1-4@s"></div>
-	</div>
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <!-- <label class="uk-form-label" for="user">Usuario</label> -->
+                            <div class="uk-form-controls uk-inline uk-width-1-2@s">
+                                <span class="uk-form-icon" uk-icon="icon: user"></span>
+                                <input type="name" class="uk-input" name="username" placeholder="Usuario" id="user">
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <!-- <label class="uk-form-label" for="password">Contraseña</label> -->
+                            <div class="uk-form-controls uk-inline uk-width-1-2@s">
+                                <span class="uk-form-icon" uk-icon="icon: lock"></span>
+                                <input type="password" name="password" class="uk-input" placeholder="Contraseña" id="password">
+                            </div>
+                        </div>
+                        <div class="uk-margin">
+                            <div class="uk-form-controls uk-inline uk-width-1-2@s">
+                                <button type="submit" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom">Entrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="uk-child-width-1-4@s"></div>
+    </div>
 </body>
 
 </html>

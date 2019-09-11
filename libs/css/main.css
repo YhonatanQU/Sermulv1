@@ -322,7 +322,7 @@ a{
 .content-form{
   margin: auto;
 }
-#money-check, #provider-check, .ceco-form, #ceco-list, #ddetalle-requerimiento,#cabecera-requerimiento{
+#money-check, #provider-check, .ceco-form, #ceco-list, #detalle-requerimiento,#cabecera-requerimiento, .remove-articulo{
   display: none;
 }
 .label-form{

@@ -1,4 +1,14 @@
-<?php $user = current_user(); ?>
+<?php $user = current_user();
+
+  if (!empty($user)) {
+      $name=join_user_and_persons($user['name']);
+      foreach ($name as $names) {
+        $val1 = $names['names'];
+        $val2 = $names['apellidos'];
+      }
+  }
+
+?>
 <!DOCTYPE html>
   <html lang="en">
     <head>
@@ -32,7 +42,7 @@
           <li class="profile">
             <a href="#" data-toggle="dropdown" class="toggle" aria-expanded="false">
               <img src="uploads/users/<?php echo $user['image'];?>" alt="user-image" class="img-circle img-inline">
-              <span><?php echo remove_junk(ucfirst($user['name'])); ?> <i class="caret"></i></span>
+              <span><?php echo $val1 .' '. $val2; ?> <i class="caret"></i></span>
             </a>
             <ul class="dropdown-menu">
               <li>

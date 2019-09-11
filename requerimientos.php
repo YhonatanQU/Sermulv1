@@ -21,19 +21,20 @@
 		  $estado = remove_junk($_POST['rq-status']);    
 	    
 	    
-	     $query  = "INSERT INTO reuirements (";
-	     $query .=" NumberRq, priority, Ceco, User, Categorie, DateCreation, DateAtention, status";
+	     $query  = "INSERT INTO requirements (";
+	     $query .=" Categorie, Ceco, DateAtention, DateCreation, NumberRq, priority,  status ,  User";
 	     $query .=") VALUES (";
-	     $query .=" '{$numero}', '{$prioridad}', '{$ceco}', '{$user}', '{$categoria}', '{$creacion}', '{$atencion}', '{$estado}'";
+	     $query .=" '{$categoria}', '{$ceco}', '{$atencion}', '{$creacion}', '{$numero}', '{$prioridad}', '{$estado}', '{$user}'";
 	     $query .=")";
+	     $data =array();
 	     if($db->query($query)){
 	       // $session->msg('s',"Requerimiento agregado exitosamente. ");
 	       // redirect('add_detail.php', false);
-	     	$data = {
-	     		'categoria':$categoria,
-	     		'numero':$numero
-	     	};
-	     	echo $numero;
+	     	$data[] =array(
+ 					"categoria"=>$_POST['rq-categorie'],
+ 					"numero"=>$numero
+ 				);
+	     	echo json_encode($data);
 	     } else {
 	       // $session->msg('d',' Lo siento, registro falló.');
 	       // redirect('requirements.php', false);

@@ -70,14 +70,10 @@
     </a>
   </li>
   <li>
-    <a href="#" class="submenu-toggle">
+    <a href="add_requirements.php" class="submenu-toggle">
       <i class="glyphicon glyphicon-ok-sign"></i>
-       <span>Requerimientos</span>
-      </a>
-      <ul class="nav submenu">
-         <li><a href="sales.php">Administrar requerimientos</a> </li>
-         <li><a href="add_requirements.php">Nuevo RQ</a> </li>
-     </ul>
+      <span>Requerimientos</span>
+    </a>
   </li>
   <li>
     <a href="#" class="submenu-toggle">

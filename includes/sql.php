@@ -8,7 +8,7 @@ function find_all($table) {
    global $db;
    if(tableExists($table))
    {
-     return find_by_sql("SELECT * FROM ".$db->escape($table));
+     return find_by_sql("SELECT * FROM ".$db->escape($table)."  ORDER BY id DESC");
    }
 }
 /*--------------------------------------------------------------*/
@@ -148,6 +148,21 @@ function tableExists($table){
       return $result;
   }
   /*--------------------------------------------------------------*/
+  /* Find all user by
+  /* Joining users table and user persons table
+  /*--------------------------------------------------------------*/
+  function join_user_and_persons($name){
+      global $db;
+      $results = array();
+      $sql = "SELECT u.name, n.Names AS names, a.Apellidos as apellidos FROM users u";
+      $sql .=" LEFT JOIN persons p ON p.id = u.name";
+      $sql .=" LEFT JOIN persons n ON n.id = u.name";
+      $sql .=" LEFT JOIN persons a ON a.id = u.name";
+      $sql .=" WHERE u.name = $name";
+      $result = find_by_sql($sql);
+      return $result;
+  }
+  /*--------------------------------------------------------------*/
   /* Function to update the last log in of a user
   /*--------------------------------------------------------------*/
 
@@ -232,6 +247,25 @@ function tableExists($table){
     $result = find_by_sql($sql);
     return json_encode($result);
    }
+   /*--------------------------------------------------------------*/
+   /* Function for Finding all product name
+   /* JOIN with categorie  and media database table
+   /*--------------------------------------------------------------*/
+  function join_product_categorie($categorie){
+     global $db;
+     $sql  =" SELECT p.id,p.name,p.codigo,p.marca,p.modelo,p.date,p.parte,p.serie,p.color,p.tipo,p.categorie_id,c.ShortName";
+    $sql  .=" AS categorie, m.file_name AS image, u.ShortName AS medida, t.NameType AS tipo, n.name AS nombre, l.NameMedida AS NombreMedida";
+    $sql  .=" FROM products p";
+    $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+    $sql  .=" LEFT JOIN categories n ON n.id = p.categorie_id";
+    $sql  .=" LEFT JOIN measure u ON u.id = p.id_measure";    
+    $sql  .=" LEFT JOIN measure l ON l.id = p.id_measure";    
+    $sql  .=" LEFT JOIN typy t ON t.id = p.tipo";    
+    $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
+    $sql  .=" WHERE p.categorie_id = '$categorie' ORDER BY p.id ASC";
+    $result = find_by_sql($sql);
+    return json_encode($result);
+   }
 
     /*--------------------------------------------------------------*/
    /* Function for Finding all product name
@@ -290,6 +324,20 @@ function tableExists($table){
     return find_by_sql($sql);
 
    }
+   /*--------------------------------------------------------------*/
+   /* Function for Finding all stock by categorie
+   /* JOIN with categorie  and media database table
+   /*--------------------------------------------------------------*/
+  function join_stock_table_by_categorie($categorie){
+     global $db;
+     $sql  =" SELECT s.id,s.cantidad,p.codigo, n.name, c.categorie_id";
+    $sql  .=" FROM stock s";
+    $sql  .=" LEFT JOIN products p ON p.id = s.product";
+    $sql  .=" LEFT JOIN products n ON n.id = s.product";
+    $sql  .=" LEFT JOIN products c ON c.id = s.product";
+    return find_by_sql($sql);
+
+   }
 
    /*--------------------------------------------------------------*/
    /* Function for Finding all product price staus
@@ -342,6 +390,18 @@ function tableExists($table){
      global $db;
      $p_codigo = remove_junk($db->escape($producto_codigo));
      $sql = "SELECT * FROM products WHERE codigo like '%$p_codigo%' LIMIT 1";
+     $result = find_by_sql($sql);
+     return json_encode($result);
+   }
+  /*--------------------------------------------------------------*/
+  /* Function for Finding all product categorie
+  /* Request coming from ajax.php for auto suggest
+  /*--------------------------------------------------------------*/
+
+   function find_product_by_categorie($producto_categoria){
+     global $db;
+     $p_categoria = remove_junk($db->escape($producto_categoria));
+     $sql = "SELECT * FROM products WHERE categorie_id like '%$p_categoria%'";
      $result = find_by_sql($sql);
      return json_encode($result);
    }

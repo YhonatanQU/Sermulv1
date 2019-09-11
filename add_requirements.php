@@ -27,7 +27,7 @@
      $r_finish  = read_date($_POST['rq-finish']);     
     
     
-     $query  = "INSERT INTO reuirements (";
+     $query  = "INSERT INTO requirements (";
      $query .=" NumberRq, priority, Ceco, User, Categorie, DateCreation, DateAtention";
      $query .=") VALUES (";
      $query .=" '{$r_number}', '{$r_priority}', '{$r_ceco}', '{$r_user}', '{$r_categorie}', '{$r_begin}', '{$r_finish}'";
@@ -60,16 +60,61 @@
     <?php echo display_msg($msg); ?>
   </div>
 </div>
-  <!--Formulario requerimiento-->
+
+<!--Lista de requerimientos-->
+  
+  <div class="row" id="lista-requerimiento">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <strong>
+            <span class="glyphicon glyphicon-folder-open"></span>
+            <span>Lista de requerimientos</span>
+          </strong>
+          <a href="#"  class="btn btn-xs btn-success pull-right" id="requerimiento-add" data-toggle="tooltip" title="Crear nuevo requerimiento">
+            <span class="glyphicon glyphicon-plus"></span>
+          </a>
+        </div>
+      <div class="panel-body">
+        <div class="requerimiento-table">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th class="text-center">Numero</th>
+                <th class="text-center">Centro de costos</th>
+                <th class="text-center">Categoria</th>
+                <th class="text-center">F. creacion</th>
+                <th class="text-center">F. atencion</th>
+                <th class="text-center">Estado</th>
+                <th class="text-center">Creado por:</th>
+              </tr>
+            </thead>
+            <tbody id="data-requerimientos">
+                 <!--Elementos cargados por ajax-->
+
+            </tbody>
+          </table>
+        </div>          
+       </div>
+      </div>
+    </div>
+  </div>
+
+<!--Fin lista de requerimientos-->
+
+<!--Formulario requerimiento-->
   <div class="row" id="cabecera-requerimiento">
         <div class="col-md-2"></div>
         <div class="col-md-8">
           <div class="panel panel-default">
-          <div class="panel-heading ">
+          <div class="panel-heading clearfix">
             <strong>
                 <i class="glyphicon glyphicon-copy"></i>
-                <span>nuevo requerimiento</span>
-           </strong>           
+                <span>nuevo requerimientos</span>
+           </strong> 
+           <a href="#" class="btn btn-xs btn-danger pull-right" id="requerimiento-list" data-toggle="tooltip" title="Lista de requerimientos">
+            <span class="glyphicon glyphicon-menu-hamburger"></span>
+           </a>          
           </div>
           <div class="panel-body">
            <div class="col-md-12">
@@ -139,16 +184,47 @@
         </div>
         <div class="col-md-2"></div> 
   </div>
-  <!--Fin formulario requerimiento-->
+
+<!--Fin formulario requerimiento-->
+
   
-  <!--Stock de materiales requerimiento-->
+<!--Stock de materiales requerimiento-->
   <div class="row" id="detalle-requerimiento">
+    <div class="col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+          <strong>
+            <span class="glyphicon glyphicon-folder-open"></span>
+            <span class="resultado-ajax green-ajax" id="resultado" >REQUERIMIENTO N° RQ-08092019521904</span>
+          </strong>
+        </div>
+      <div class="panel-body">
+        <div class="requerimiento-table">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th class="text-center">Codigo</th>
+                <th class="text-center">Articulo</th>
+                <th class="text-center">Unidad</th>
+                <th class="text-center">Opcion</th>
+              </tr>
+            </thead>
+            <tbody id="data-articulos-stock">
+                 <!--Elementos cargados por ajax-->
+            
+            </tbody>
+          </table>
+        </div>          
+       </div>
+      </div>
+    </div>
+
     <div class="col-md-12">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
           <strong>
             <span class="glyphicon glyphicon-folder-open"></span>
-            <span>Lista de articulos</span>
+            <span>ARTICULOS SOLICITADOS</span>
           </strong>
           <a href="#" class="btn btn-xs btn-success pull-right" id="ceco-add">
             <span class="glyphicon glyphicon-plus"></span>
@@ -158,8 +234,8 @@
           </a>
         </div>
       <div class="panel-body">
-        <div class="resultado-ajax green-ajax" id="resultado">Numero de RQ</div>
-        <div class="ceco-table">
+        <div class="resultado-ajax green-ajax" id="resultado"></div>
+        <div class="requerimiento-table">
           <table class="table table-bordered table-striped">
             <thead>
               <tr>
@@ -170,8 +246,9 @@
                 <th class="text-center">Opcion</th>
               </tr>
             </thead>
-            <tbody id="data-articulos-stock">
+            <tbody id="data-articulos-stock1">
                  <!--Elementos cargados por ajax-->
+
             </tbody>
           </table>
         </div>          
@@ -179,6 +256,6 @@
       </div>
     </div>
   </div>
-  <!--Fin stock de materiales requerimiento-->
+<!--Fin stock de materiales requerimiento-->
   
 <?php include_once('layouts/footer.php'); ?>

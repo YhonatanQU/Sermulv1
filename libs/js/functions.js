@@ -126,16 +126,18 @@ function priceForm(idPrice){
     data:{option: option, id: id},
     success: function (response) {
       UpdatePriceForm();
+        //obtenerProductos();
       var mostrar=JSON.parse(response);
-      mostrar.forEach(price=>{
+      mostrar.forEach(price=>{//price.producto_id;
         products ="<option value='" + price.producto_id + "' selected>"+price.codigo + "-" + price.descripcion + "</option>";
         moneys ="<option value='" + price.moneda_id + "' selected>"+price.moneda_simbolo + "-" + price.moneda + "</option>";
         providers ="<option value='" + price.proveedor_id + "' selected>"+price.proveedor + "</option>";
         prices=price.precio;
         fechas=price.fecha;
-
       });
-      $('#product').html(products);
+
+      //$("#product-price > option[value ='" +  products + "']").attr("selected",true);
+      $('#product-price').html(products);
       $('#money').html(moneys);
       $('#provider').html(providers);
       $('#price').val(prices);
@@ -207,7 +209,7 @@ function obtenerProductos(){
           </option>
         `
       });
-      $('#product').html(plantilla);
+      $('#product-price').html(plantilla);
       
     }
   });
@@ -539,7 +541,7 @@ function detalleCeco() {
           method:"POST",
           data:{option: option, cecoId: cecoId},
           success:function (response) {
-            console.log(response);
+            //console.log(response);
             var plantilla='';
             var mostrar=JSON.parse(response);
             mostrar.forEach(ceco =>{
@@ -605,17 +607,68 @@ function detalleCeco() {
 //fin centro de costos
 
 //requerimiento
-  //ocultamos formulario cabecera
-    function ocultarformularioCabecera() {
-      $('#cabecera-requerimiento').fadeOut();
-      $('#detalle-requerimiento').fadeIn();
+  //Listar requerimiento
+    function listarRequerimiento() {
+      var option = "lista";
+      //var table = "reuirements";
+      var table = "requirements";
+
+      $.ajax({
+        url:"all_requerimiento.php",
+        method:"POST",
+        data:{option: option, table: table},
+        success:function (response) {
+          //listar requerimientos
+          var mostrar = JSON.parse(response);
+          var plantilla = '';
+
+          mostrar.forEach(datos =>{
+            plantilla += `
+              <tr>
+                  <td>${datos.numero}</td>
+                  <td>${datos.ceco}</td>
+                  <td>${datos.categoria}</td>
+                  <td>${datos.creacion}</td>
+                  <td>${datos.atencion}</td>
+                  <td>${datos.estado}</td>
+                  <td>${datos.usuario}</td>
+              </tr>
+            `
+          });
+          $('#data-requerimientos').html(plantilla);
+        }
+      });
+
     }
-  //fin oculatar formulario cabecera
+  //ocultar lista de requerimientos y mostramos formulario cabecera
+      function cambiarVista(Mostrar, Ocultar) {
+        $(Mostrar).slideUp(0);//css("display", "none");
+        $(Ocultar).fadeIn(1000);//css("display", "inline");
+      }
+      function mostrarCabecera() {
+        $('#requerimiento-add').click(function(){
+          cambiarVista('#lista-requerimiento', '#cabecera-requerimiento');
+          mostrarRequerimientos();
+
+        });
+      }
+      function mostrarRequerimientos() {
+         $('#requerimiento-list').click(function(){
+          //cambiarVista('requerimiento-add', 'requerimiento-list');
+          cambiarVista('#cabecera-requerimiento', '#lista-requerimiento');
+
+        });
+      }
+    //ocultamos formulario cabecera
+      function ocultarformularioCabecera() {
+        $('#cabecera-requerimiento').fadeOut();
+        $('#detalle-requerimiento').fadeIn(1000);
+      }
+    //fin oculatar formulario cabecera
 
   function cabeceraRequerimiento (argument) {
     $('#form-requerimiento').on('submit', function(e) {
       e.preventDefault();
-      $('#rq-ceco')
       var form_requerimiento = $(this).serialize();
       //console.log(form_requerimiento);
       $.ajax({
@@ -623,16 +676,24 @@ function detalleCeco() {
         method:"POST",
         data:form_requerimiento,
         success:function (response) {
-          ocultarformularioCabecera();
-          detalleRequerimiento(response);
+          //console.log(response);
+          var data = JSON.parse(response);
+          data.forEach(insert =>{
+            categoria = insert.categoria;
+            numero = insert.numero;
+          });
+          cambiarVista( '#cabecera-requerimiento', '#detalle-requerimiento');
+          detalleRequerimiento(numero);
+          listaArticulo(numero,categoria);
+          listarRequerimiento();
         }
       });
     });
   }
 
   function detalleRequerimiento(requerimiento) {
-    plantilla = "<div>" + requerimiento + "</div>";
-    $('#resultado').html(plantilla);
+    plantilla = "REQUERIMIENTO N° " + requerimiento;
+    $('#resultado').text(plantilla);
   }
 
   //Lista de articulos
@@ -640,13 +701,44 @@ function detalleCeco() {
     function listaArticulo(requerimiento, categoria) {
       var requerimiento =requerimiento;
       var categoria = categoria;
-      var option = option;
+      var option = "listar";
       $.ajax({
         url:"all_requerimiento.php",
         method:"POST",
         data:{option: option, requerimiento: requerimiento, categoria: categoria},
         success:function (response) {
-          alert(response);
+          var lista = JSON.parse(response);
+          var plantilla = '';
+          lista.forEach(data => {
+          plantilla +=`
+            <tr articulo-id="${data.id}">
+              <td class="text-center">${data.codigo}</td>
+              <td class="text-left">${data.name}</td>
+              <td class="text-left">${data.medida}</td>
+              <td class="text-center">
+                    <a id="agregar-articulo" class="agregar-articulo btn btn-xs btn-success" data-toggle="tooltip" title="Agregar articulo">
+                      <span class="glyphicon glyphicon-ok"></span>
+                    </a>
+                    <a id="remove-articulo" class="remove-articulo btn btn-xs btn-danger" data-toggle="tooltip" title="Quitar articulo">
+                      <span class="glyphicon glyphicon-remove"></span>
+                    </a>
+              </td>
+            </tr>`;
+          });
+          $('#data-articulos-stock').html(plantilla);
+           //mostrar boton eliminar articulo
+            // $('#agregar-articulo').click(function () {
+            //   $(this).cambiarVista(  '#agregar-articulo','#remove-articulo');
+              
+            // });
+            //  //mostrar boton agragr articulo
+            // $('#remove-articulo').click(function () {
+            //   $(this).cambiarVista(  '#remove-articulo','#agregar-articulo');
+              
+            // });
+            
+          $('#data-articulos-stock1').html(plantilla);
+
         }
       });
     }
@@ -719,8 +811,14 @@ function detalleCeco() {
     //fin ceco
 
   //requerimiento
+    //listar requeriminetos
+      listarRequerimiento();
+    //ocultar cabecera y cambiar icono
+      mostrarCabecera();
+    //formulario cabecera requerimiento
+      cabeceraRequerimiento();
 
-  cabeceraRequerimiento();
+
 
   //fin requerimiento
 

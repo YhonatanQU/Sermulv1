@@ -12,11 +12,11 @@
    validate_fields($req_fields);
 
    if(empty($errors)){
-           $name   = remove_junk($db->escape($_POST['full-name']));
+           $name   = (int)$_POST['full-name'];
        $username   = remove_junk($db->escape($_POST['username']));
        $password   = remove_junk($db->escape($_POST['password']));
        $user_level = (int)$db->escape($_POST['level']);
-       //$password = sha1($password);
+       $password = sha1($password);
         $query = "INSERT INTO users (";
         $query .="name,username,password,user_level,status";
         $query .=") VALUES (";
