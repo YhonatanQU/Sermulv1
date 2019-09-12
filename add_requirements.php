@@ -68,7 +68,7 @@
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
           <strong>
-            <span class="glyphicon glyphicon-folder-open"></span>
+            <span class="glyphicon glyphicon-list-alt"></span>
             <span>Lista de requerimientos</span>
           </strong>
           <a href="#"  class="btn btn-xs btn-success pull-right" id="requerimiento-add" data-toggle="tooltip" title="Crear nuevo requerimiento">
@@ -190,11 +190,11 @@
   
 <!--Stock de materiales requerimiento-->
   <div class="row" id="detalle-requerimiento">
-    <div class="col-md-9">
+    <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
           <strong>
-            <span class="glyphicon glyphicon-folder-open"></span>
+            <span class="glyphicon glyphicon-list-alt"></span>
             <span class="resultado-ajax green-ajax" id="resultado" >REQUERIMIENTO N° RQ-08092019521904</span>
           </strong>
         </div>
@@ -206,7 +206,8 @@
                 <th class="text-center">Codigo</th>
                 <th class="text-center">Articulo</th>
                 <th class="text-center">Unidad</th>
-                <th class="text-center">Opcion</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Op.</th>
               </tr>
             </thead>
             <tbody id="data-articulos-stock">
@@ -219,12 +220,12 @@
       </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading clearfix">
           <strong>
-            <span class="glyphicon glyphicon-folder-open"></span>
-            <span>ARTICULOS SOLICITADOS</span>
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            <span>LISTA DE PEDIDOS</span>
           </strong>
           <a href="#" class="btn btn-xs btn-success pull-right" id="ceco-add">
             <span class="glyphicon glyphicon-plus"></span>
@@ -240,15 +241,23 @@
             <thead>
               <tr>
                 <th class="text-center">Codigo</th>
-                <th class="text-center">Articulo</th>
                 <th class="text-center">Unidad</th>
                 <th class="text-center">Cantidad</th>
-                <th class="text-center">Opcion</th>
+                <th class="text-center">Op.</th>
               </tr>
             </thead>
             <tbody id="data-articulos-stock1">
                  <!--Elementos cargados por ajax-->
-
+              <tr class="text-center">
+                <td><a href="#" data-toggle="tooltip" title="FIERRO ACEROS AREQUIPA DE 1/2">15001</a></td>
+                <td>UND</td>
+                <td>10</td>
+                <td>
+                  <button id="remove-pedido" type="submit" name="remove-pedido" class="remove-pedido btn btn-xs btn-danger" data-toggle="tooltip" title="Quitar pedido">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>          

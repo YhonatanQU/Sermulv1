@@ -691,9 +691,11 @@ function detalleCeco() {
     });
   }
 
+  var numero_requerimiento = '';
   function detalleRequerimiento(requerimiento) {
     plantilla = "REQUERIMIENTO N° " + requerimiento;
     $('#resultado').text(plantilla);
+    numero_requerimiento = requerimiento;
   }
 
   //Lista de articulos
@@ -711,18 +713,22 @@ function detalleCeco() {
           var plantilla = '';
           lista.forEach(data => {
           plantilla +=`
-            <tr articulo-id="${data.id}">
-              <td class="text-center">${data.codigo}</td>
-              <td class="text-left">${data.name}</td>
-              <td class="text-left">${data.medida}</td>
-              <td class="text-center">
-                    <a id="agregar-articulo" class="agregar-articulo btn btn-xs btn-success" data-toggle="tooltip" title="Agregar articulo">
-                      <span class="glyphicon glyphicon-ok"></span>
-                    </a>
-                    <a id="remove-articulo" class="remove-articulo btn btn-xs btn-danger" data-toggle="tooltip" title="Quitar articulo">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </a>
-              </td>
+            <tr articulo-id="" class="text-center">
+              <form id="form-pedido">
+                  <input type="hidden" value="${data.id}"></input>
+                  <input type="hidden" value="${numero_requerimiento}"></input>
+                  <td width="35px" class="text-center">${data.codigo}</td>
+                  <td class="text-left">${data.name}</td>
+                  <td width="35px" class="text-left">${data.medida}</td>
+                  <td width="110px" class="text-left">
+                    <input type="number" class="form-control" placeholder="000000"></input>
+                  </td>
+                  <td width="20px" class="text-center">
+                        <button id="agregar-articulo" type="submit" name="agregar-articulo" class="agregar-articulo btn btn-xs btn-success" data-toggle="tooltip" title="Agregar articulo">
+                          <span class="glyphicon glyphicon-ok"></span>
+                        </button>
+                  </td>               
+              </form>
             </tr>`;
           });
           $('#data-articulos-stock').html(plantilla);
@@ -731,14 +737,11 @@ function detalleCeco() {
             //   $(this).cambiarVista(  '#agregar-articulo','#remove-articulo');
               
             // });
-            //  //mostrar boton agragr articulo
+            //  //mostrar boton agregar articulo
             // $('#remove-articulo').click(function () {
             //   $(this).cambiarVista(  '#remove-articulo','#agregar-articulo');
               
             // });
-            
-          $('#data-articulos-stock1').html(plantilla);
-
         }
       });
     }
