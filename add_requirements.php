@@ -76,8 +76,10 @@
           </a>
         </div>
       <div class="panel-body">
+      
         <div class="requerimiento-table">
-          <table class="table table-bordered table-striped">
+          <div class="paginacion-botones" id="paginacion-botones"></div>
+          <table id = "" class="table table-bordered table-striped">
             <thead>
               <tr>
                 <th class="text-center">Numero</th>
@@ -94,6 +96,7 @@
 
             </tbody>
           </table>
+          <div class="paginacion-botones" id="paginacion-botones"></div>
         </div>          
        </div>
       </div>
@@ -197,11 +200,21 @@
             <span class="glyphicon glyphicon-list-alt"></span>
             <span class="resultado-ajax green-ajax" id="resultado" >REQUERIMIENTO N° RQ-08092019521904</span>
           </strong>
+
         </div>
       <div class="panel-body">
-        <div class="requerimiento-table">
-          <table class="table table-bordered table-striped">
+        <div class="requerimiento-table" >
+          <table class="table-list table table-bordered table-striped" id="table-list">
             <thead>
+              <tr>
+                <th  colspan="6">
+                    <form action="" class="form-inline pull-right">
+                      <label for="buscador">Buscar articulo</label>
+                      <input id="buscador" class="buscador form-control input-default" type="text">
+                      <button class="btn btn-primary">BUSCAR</button>
+                    </form>
+                </th>
+              </tr>
               <tr>
                 <th class="text-center">Codigo</th>
                 <th class="text-center">Articulo</th>
@@ -241,23 +254,13 @@
             <thead>
               <tr>
                 <th class="text-center">Codigo</th>
-                <th class="text-center">Unidad</th>
                 <th class="text-center">Cantidad</th>
                 <th class="text-center">Op.</th>
               </tr>
             </thead>
-            <tbody id="data-articulos-stock1">
+            <tbody id="data-articulos-pedido">
                  <!--Elementos cargados por ajax-->
-              <tr class="text-center">
-                <td><a href="#" data-toggle="tooltip" title="FIERRO ACEROS AREQUIPA DE 1/2">15001</a></td>
-                <td>UND</td>
-                <td>10</td>
-                <td>
-                  <button id="remove-pedido" type="submit" name="remove-pedido" class="remove-pedido btn btn-xs btn-danger" data-toggle="tooltip" title="Quitar pedido">
-                    <span class="glyphicon glyphicon-remove"></span>
-                  </button>
-                </td>
-              </tr>
+             
             </tbody>
           </table>
         </div>          

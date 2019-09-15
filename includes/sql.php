@@ -151,6 +151,21 @@ function tableExists($table){
   /* Find all user by
   /* Joining users table and user persons table
   /*--------------------------------------------------------------*/
+  function join_detailrq_and_products($id_requerimiento){
+      global $db;
+      $id=(int)$id_requerimiento;
+      $results = array();
+      $sql = "SELECT d.id, d.Quantity, p.name AS name, c.codigo AS codigo FROM detailrq d";
+      $sql .=" LEFT JOIN products p ON p.id = d.Products";
+      $sql .=" LEFT JOIN products c ON c.id = d.Products";
+      $sql .=" WHERE d.RQ = $id ";
+      $result = find_by_sql($sql);
+      return $result;
+  }
+  /*--------------------------------------------------------------*/
+  /* Find all user by
+  /* Joining users table and user persons table
+  /*--------------------------------------------------------------*/
   function join_user_and_persons($name){
       global $db;
       $results = array();
@@ -385,7 +400,6 @@ function tableExists($table){
   /* Function for Finding all product codigo
   /* Request coming from ajax.php for auto suggest
   /*--------------------------------------------------------------*/
-
    function find_product_by_codigo($producto_codigo){
      global $db;
      $p_codigo = remove_junk($db->escape($producto_codigo));
@@ -393,6 +407,7 @@ function tableExists($table){
      $result = find_by_sql($sql);
      return json_encode($result);
    }
+
   /*--------------------------------------------------------------*/
   /* Function for Finding all product categorie
   /* Request coming from ajax.php for auto suggest
@@ -410,11 +425,21 @@ function tableExists($table){
   /* Funcion que busca producto por id en la tabla price
   /* 
   /*--------------------------------------------------------------*/
-
    function find_product_by_id_in_price($product_id){
      global $db;
      $codigo = remove_junk($db->escape($product_id));
      $sql = "SELECT * FROM price WHERE producto_id like '%$p_id%' LIMIT 1";
+     $result = find_by_sql($sql);
+     return $result;
+   }
+  /*--------------------------------------------------------------*/
+  /* Funcion que busca producto por id en la tabla price
+  /* 
+  /*--------------------------------------------------------------*/
+   function find_requirements_by_number($number_requirements){
+     global $db;
+     $number = remove_junk($db->escape($number_requirements));
+     $sql = "SELECT id FROM requirements WHERE NumberRq = '$number'";
      $result = find_by_sql($sql);
      return $result;
    }
@@ -423,8 +448,6 @@ function tableExists($table){
   /* Buscar precio por id
   /* Request coming from ajax.php for auto suggest
   /*--------------------------------------------------------------*/
-
-
   function find_price_by_id($price_id){
      global $db;
      $price = remove_junk($db->escape($price_id));

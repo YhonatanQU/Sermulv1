@@ -46,9 +46,7 @@ function suggetion() {
 
 $('#sug-form').submit(function(e) {
       var formData = $(this).serialize();
-      // {
-      //     'p_name' : $('input[name=title]').val()
-      // };
+     
         // process the form
         $.ajax({
             type        : 'POST',
@@ -109,7 +107,6 @@ function priceUpdate(){
       success:function(response) {
         priceForm(response);
         check();
-        //$('#prices').trigger('reset');     
         
       }
     });
@@ -136,7 +133,6 @@ function priceForm(idPrice){
         fechas=price.fecha;
       });
 
-      //$("#product-price > option[value ='" +  products + "']").attr("selected",true);
       $('#product-price').html(products);
       $('#money').html(moneys);
       $('#provider').html(providers);
@@ -541,7 +537,6 @@ function detalleCeco() {
           method:"POST",
           data:{option: option, cecoId: cecoId},
           success:function (response) {
-            //console.log(response);
             var plantilla='';
             var mostrar=JSON.parse(response);
             mostrar.forEach(ceco =>{
@@ -605,12 +600,74 @@ function detalleCeco() {
 }
 
 //fin centro de costos
+//Botones
+  function botones(numero_botones) {
+    plantilla = '';
+    cantidad = numero_botones/20;
+    plantilla = `
+                <nav>
+                  <ul class="pagination">
+                    <li>
+                      <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                `
 
+    for (var i = 1; i <= Math.ceil(cantidad); i++) {
+        plantilla += `<li>
+                          <a href="#" id="${i}" onclick="pagina(this.id)">
+                            ${i}
+                          </a>
+                      </li>
+        `   
+
+    }             
+                    
+    plantilla += `<li>
+                      <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                  </li>
+                </ul>
+            </nav>
+    `
+    $('.paginacion-botones').html(plantilla);
+
+    return Math.ceil(cantidad);
+  }
+//fin botones
+//pagina
+  function pagina(numero) {
+    var inicial = 1 + (parseFloat(numero) - 1)*20;
+    var final = inicial + 19;
+  }
+//Fin pagina
+//mostrar lista 
+  function mostrarLista(datos, id_etiqueta, numero) {
+    var datos = JSON.parse(datos);
+    console.log(datos);
+    var plantilla = '';
+      datos.forEach(datos =>{
+        plantilla += `
+          <tr>
+            <td>${datos.numero}</td>
+            <td>${datos.ceco}</td>
+            <td>${datos.categoria}</td>
+            <td>${datos.creacion}</td>
+            <td>${datos.atencion}</td>
+            <td>${datos.estado}</td>
+            <td>${datos.usuario}</td>
+          </tr>`
+      });
+    $(id_etiqueta).html(plantilla);    
+    //console.log(id_etiqueta + ' ' + numero + ' ' + datos);
+  }
+//fin mostrar lista
 //requerimiento
   //Listar requerimiento
     function listarRequerimiento() {
       var option = "lista";
-      //var table = "reuirements";
       var table = "requirements";
 
       $.ajax({
@@ -620,30 +677,34 @@ function detalleCeco() {
         success:function (response) {
           //listar requerimientos
           var mostrar = JSON.parse(response);
-          var plantilla = '';
+          var cantidad = mostrar.length;
+          var numero =botones(cantidad);
+          var id_etiqueta ='#data-requerimientos';
+          mostrarLista(response, id_etiqueta, numero);
+          // var plantilla = '';
 
-          mostrar.forEach(datos =>{
-            plantilla += `
-              <tr>
-                  <td>${datos.numero}</td>
-                  <td>${datos.ceco}</td>
-                  <td>${datos.categoria}</td>
-                  <td>${datos.creacion}</td>
-                  <td>${datos.atencion}</td>
-                  <td>${datos.estado}</td>
-                  <td>${datos.usuario}</td>
-              </tr>
-            `
-          });
-          $('#data-requerimientos').html(plantilla);
+          // mostrar.forEach(datos =>{
+          //   plantilla += `
+          //     <tr>
+          //         <td>${datos.numero}</td>
+          //         <td>${datos.ceco}</td>
+          //         <td>${datos.categoria}</td>
+          //         <td>${datos.creacion}</td>
+          //         <td>${datos.atencion}</td>
+          //         <td>${datos.estado}</td>
+          //         <td>${datos.usuario}</td>
+          //     </tr>
+          //   `
+          // });
+          // $('#data-requerimientos').html(plantilla);
         }
       });
 
     }
   //ocultar lista de requerimientos y mostramos formulario cabecera
       function cambiarVista(Mostrar, Ocultar) {
-        $(Mostrar).slideUp(0);//css("display", "none");
-        $(Ocultar).fadeIn(1000);//css("display", "inline");
+        $(Mostrar).slideUp(0);
+        $(Ocultar).fadeIn(1000);
       }
       function mostrarCabecera() {
         $('#requerimiento-add').click(function(){
@@ -654,7 +715,6 @@ function detalleCeco() {
       }
       function mostrarRequerimientos() {
          $('#requerimiento-list').click(function(){
-          //cambiarVista('requerimiento-add', 'requerimiento-list');
           cambiarVista('#cabecera-requerimiento', '#lista-requerimiento');
 
         });
@@ -670,13 +730,11 @@ function detalleCeco() {
     $('#form-requerimiento').on('submit', function(e) {
       e.preventDefault();
       var form_requerimiento = $(this).serialize();
-      //console.log(form_requerimiento);
       $.ajax({
         url:"requerimientos.php",
         method:"POST",
         data:form_requerimiento,
         success:function (response) {
-          //console.log(response);
           var data = JSON.parse(response);
           data.forEach(insert =>{
             categoria = insert.categoria;
@@ -691,14 +749,25 @@ function detalleCeco() {
     });
   }
 
-  var numero_requerimiento = '';
+  var id_requerimiento = '';
   function detalleRequerimiento(requerimiento) {
+    var option = "requerimiento";
+    $.ajax({
+      url:"all_requerimiento.php",
+      method:"POST",
+      data:{option: option, requirements: requerimiento},
+      success:function (response) {
+        var data = JSON.parse(response);
+        data.forEach(datos =>{
+          id_requerimiento = datos.id;
+         });
+      }
+    });
     plantilla = "REQUERIMIENTO N° " + requerimiento;
     $('#resultado').text(plantilla);
-    numero_requerimiento = requerimiento;
   }
 
-  //Lista de articulos
+  //Lista de articulos por categoria seleccionada en el rq
 
     function listaArticulo(requerimiento, categoria) {
       var requerimiento =requerimiento;
@@ -711,47 +780,114 @@ function detalleCeco() {
         success:function (response) {
           var lista = JSON.parse(response);
           var plantilla = '';
+          
           lista.forEach(data => {
           plantilla +=`
-            <tr articulo-id="" class="text-center">
-              <form id="form-pedido">
-                  <input type="hidden" value="${data.id}"></input>
-                  <input type="hidden" value="${numero_requerimiento}"></input>
+            <tr articulo-id="${data.id}" class="text-center" requerimiento-id="${id_requerimiento}">
                   <td width="35px" class="text-center">${data.codigo}</td>
                   <td class="text-left">${data.name}</td>
                   <td width="35px" class="text-left">${data.medida}</td>
                   <td width="110px" class="text-left">
-                    <input type="number" class="form-control" placeholder="000000"></input>
+                    <input type="number" class="form-control" id="${data.id}" placeholder="000000" required="required"></input>
                   </td>
                   <td width="20px" class="text-center">
-                        <button id="agregar-articulo" type="submit" name="agregar-articulo" class="agregar-articulo btn btn-xs btn-success" data-toggle="tooltip" title="Agregar articulo">
+                        <a id="agregar-articulo" name="agregar-articulo" class="agregar-articulo btn btn-xs btn-success" data-toggle="tooltip" title="Agregar articulo">
                           <span class="glyphicon glyphicon-ok"></span>
-                        </button>
+                        </a>
                   </td>               
-              </form>
-            </tr>`;
+            </tr>
+            `;
           });
           $('#data-articulos-stock').html(plantilla);
-           //mostrar boton eliminar articulo
-            // $('#agregar-articulo').click(function () {
-            //   $(this).cambiarVista(  '#agregar-articulo','#remove-articulo');
-              
-            // });
-            //  //mostrar boton agregar articulo
-            // $('#remove-articulo').click(function () {
-            //   $(this).cambiarVista(  '#remove-articulo','#agregar-articulo');
-              
-            // });
+          agregarPedido();
         }
       });
     }
 
-  //Fin lista de articulos 
+  //Fin de articulos por categoria seleccionada en el rq
+
+  //Agregando articulo a los pedidos 
+    function agregarPedido() {
+      $('.agregar-articulo').on('click',function(e) {
+        e.preventDefault();
+        var option ="detalle";
+        var element = $(this)[0].parentElement.parentElement;
+        var id_articulo = $(element).attr('articulo-id');
+        var id_requerimiento = $(element).attr('requerimiento-id');
+        var cantidad_articulo = $('#' + id_articulo).val();
+        if (cantidad_articulo > 0) {
+          $.ajax({
+            url:"all_requerimiento.php",
+            method:"POST",
+            data:{option: option, articulo: id_articulo, requerimiento: id_requerimiento, cantidad: cantidad_articulo},
+            success: function (response) {
+              listarPedido(id_requerimiento);
+            }
+
+          });
+        }else{
+          alert("Debe ingresar la cantidad del articulo a solicitar.");
+        }
+      })
+    }
+    //Listar articulos agregados a pedido
+    var requerimiento = '';
+    function listarPedido(id_requerimiento) {
+      var option = "pedido";
+      $.ajax({
+        url:"all_requerimiento.php",
+        method:"POST",
+        data:{option: option, requerimiento: id_requerimiento},
+        success:function (response) {
+          var data = JSON.parse(response);
+          var plantilla = '';          
+          data.forEach(datos => {
+          requerimiento = id_requerimiento;
+          plantilla +=`
+             <tr class="text-center" pedido-id="${datos.id}">
+                <td><a href="#" data-toggle="tooltip" title="${datos.nombre}">${datos.codigo}</a></td>
+                <td>${datos.cantidad}</td>
+                <td>
+                  <button id="remove-pedido" type="submit" name="remove-pedido" class="remove-pedido btn btn-xs btn-danger" data-toggle="tooltip" title="Quitar pedido">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </button>
+                </td>
+              </tr>
+            `;
+          });
+          $('#data-articulos-pedido').html(plantilla);
+          eliminarArticuloPedido();
+          
+        }
+      });
+    }
+
+    //Eliminar el articulo de pedido
+    function eliminarArticuloPedido(){
+      $('.remove-pedido').click(function() {
+        var option = "eliminar";
+        var element = $(this)[0].parentElement.parentElement;
+        var pedido = $(element).attr('pedido-id');
+        var table = "detailrq";
+        $.ajax({
+          url:"all_requerimiento.php",
+          method:"POST",
+          data:{option: option, pedido: pedido, table: table},
+          success: function(response) {
+            alert(response);
+            listarPedido(requerimiento);
+          }
+        });
+      });
+    }
+    //Fin eliminar el articulo de pedido
+    //Fin listar articulos agregados a pedido
+  //Fin agregando articulo a los pedidos 
 
 // fin de reuquerimiento
 
 
-  $(document).ready(function() {
+$(document).ready(function() {
 
     //tooltip
     $('[data-toggle="tooltip"]').tooltip();
@@ -765,14 +901,6 @@ function detalleCeco() {
     total();
     //registrar precio a la base de datos
     registrarPrecio();
-    //mostrar formulario de ingreso de precio y ocultar tabla de precios
-    //newPrice();
-    //mostrar tabla de precios y ocultar formulario de registro de precios
-    //listarPrice();
-
-    //elimina precio
-     // deletePrice();
-    //listar precios
 
     obtenerPrecios();
     $('#listar-price').click(function () {
@@ -821,8 +949,6 @@ function detalleCeco() {
     //formulario cabecera requerimiento
       cabeceraRequerimiento();
 
-
-
   //fin requerimiento
 
     $('#').cl
@@ -859,5 +985,21 @@ function detalleCeco() {
             format: 'yyyy-mm-dd',
             todayHighlight: true,
             autoclose: true
-    });  
-  });
+    });
+
+    //buscador
+    $('.buscador').keyup(function(e) {
+      e.preventDefault();
+      //alert('hola buscador');
+      _this = this;
+       // Show only matching TR, hide rest of them
+       $.each($(".table-list tbody tr"), function() {
+         if($(this).text().toLowerCase().indexOf($(_this).val().toLowerCase()) === -1)
+            $(this).hide();
+         else
+            $(this).show();
+       });
+    });
+
+    //Fin buscador 
+});
